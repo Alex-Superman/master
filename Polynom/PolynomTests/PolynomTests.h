@@ -2,6 +2,8 @@
 
 #include "../Polynom.h"
 
+/*Лабораторная работа 1*/
+
 //тестирование для getter'ов не сделано, т.к. там примитивный код
 
 //тест для конструктора по умолчанию
@@ -25,3 +27,31 @@ void setCoefficientTest();
 //тест для метода вычисления многочлена
 void computeTest();
 
+/*Лабораторная работа 2*/
+
+//тест оператора +
+void addOperatorTest();
+
+//тест оператора -
+void subOperatorTest();
+
+//тест оператора ++ (префикс)
+void prefixIncrementOperatorTest();
+
+//тест оператора ++ (постфикс)
+void postfixIncrementOperatorTest();
+
+//тест оператора -- (префикс)
+void prefixDecrementOperatorTest();
+
+//тест оператора -- (постфикс)
+void postfixDecrementOperatorTest();
+
+//тест оператора ()
+void functionOperatorTest();
+
+//тест оператора []
+void indexOperatorTest();
+
+//тест оператора =
+void assignmentOperatorTest();

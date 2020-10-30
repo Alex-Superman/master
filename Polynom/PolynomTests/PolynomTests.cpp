@@ -4,6 +4,8 @@
 
 using namespace std;
 
+/*Лабораторная работа 1*/
+
 //тест для конструктора по умолчанию
 void defaultConstructorTest()
 {
@@ -56,34 +58,8 @@ void parametrConstructorTest()
 		if (P.getCoefficient(i) != coefficients[i])
 			throw exception("Invalid coefficient value in the parametr constructor");
 
-	//конструктор с параметрами должен выбрасывать исключение, если указана отрицательная степень
-	try
-	{
-		Polynom P(-1, coefficients);
-
-		throw exception("A constructor with parameters can take a negative degree");
-	}
-	catch (const exception& error)
-	{
-		if (strcmp(error.what(), "Negative degree of the polynom"))
-			throw;
-	}
-
 	delete[] coefficients;
 	coefficients = nullptr;
-
-	//конструктор с параметрами должен выбрасывать исключение, если на вход пришел нулевой указатель
-	try
-	{
-		Polynom P(1, coefficients);
-
-		throw exception("A constructor with parameters can take a nullptr array of coefficients");
-	}
-	catch (const exception& error)
-	{
-		if (strcmp(error.what(), "Array of coefficients equals to nullptr"))
-			throw;
-	}
 
 	cout << "The paramets constructor was tested successfully!" << endl;
 
@@ -146,19 +122,6 @@ void setDegreeTest()
 		if (P.getCoefficient(i) != 0)
 			throw exception("Bad coefficient in setDegree()");
 
-	//метод должен выбрасывать исключение при попытке установить отрицательную степень
-	try
-	{
-		P.setDegree(-1);
-
-		throw exception("A setDegree() can take a negative degree");
-	}
-	catch (const exception& error)
-	{
-		if (strcmp(error.what(), "Negative degree of the polynom"))
-			throw;
-	}
-
 	cout << "The setDegree() was tested successfully!" << endl;
 }
 
@@ -190,19 +153,6 @@ void setCoefficientsTest()
 	delete[] coefficients;
 	coefficients = nullptr;
 
-	//метод должен выбрасывать исключение, если на вход пришел нулевой указатель
-	try
-	{
-		P.setCoefficients(coefficients);
-
-		throw exception("A setCoefficients() can take a nullptr array of coefficients");
-	}
-	catch (const exception& error)
-	{
-		if (strcmp(error.what(), "Array of coefficients equals to nullptr"))
-			throw;
-	}
-
 	cout << "The setCoefficients() was tested successfully!" << endl;
 
 }
@@ -232,32 +182,6 @@ void setCoefficientTest()
 	}
 	delete[] coefficients;
 
-	//метод должен выбрасывать исключение, если указана отрицательная степень
-	try
-	{
-		P.setCoefficient(1, -1);
-
-		throw exception("A getCoefficient() can take a negative degree");
-	}
-	catch (const exception& error)
-	{
-		if (strcmp(error.what(), "Bad degree"))
-			throw;
-	}
-
-	//метод должен выбрасывать исключение, если указана степень, превышающая степень многочлена
-	try
-	{
-		P.setCoefficient(1, degree + 2);
-
-		throw exception("A getCoefficient() can take a bad degree");
-	}
-	catch (const exception& error)
-	{
-		if (strcmp(error.what(), "Bad degree"))
-			throw;
-	}
-
 	cout << "The setCoefficient() was tested successfully!" << endl;
 
 }
@@ -282,4 +206,223 @@ void computeTest()
 		throw exception("Bad value in compute()");
 
 	cout << "The compute() was tested successfully!" << endl;
+}
+
+/*Лабораторная работа 2*/
+
+//тест оператора +
+void addOperatorTest()
+{
+	int degree = 5;
+	double* coefficients = new double[degree + 1];
+	for (int i = 0; i < degree + 1; i++)
+		coefficients[i] = i;
+
+	Polynom P(degree, coefficients);
+
+	//складывыаем многочлен с самим собой
+	Polynom result = P + P;
+
+	cout << "operator + test:" << endl;
+	cout << "Expected \t Actually" << endl;
+	cout << "Degree:" << endl;
+	cout << degree << " \t\t " << result.getDegree() << endl;
+	cout << "Coefficients:" << endl;
+	for (int i = 0; i < result.getDegree() + 1; i++)
+		cout << 2 * coefficients[i] << " \t\t " << result.getCoefficient(i) << endl;
+
+	//степень суммы должна равняться degree
+	if(result.getDegree() != degree)
+		throw exception("Bad degree in operator +");
+
+	//коэффициенты должны совпадать с ожидаемыми
+	for (int i = 0; i < degree + 1; i++)
+		if (result.getCoefficient(i) != 2*coefficients[i])
+			throw exception("Bad coefficient in operator +");
+
+	cout << "The operator + was tested successfully!" << endl;
+}
+
+//тест оператора -
+void subOperatorTest()
+{
+	int degree = 5;
+	double* coefficients = new double[degree + 1];
+	for (int i = 0; i < degree + 1; i++)
+		coefficients[i] = i;
+
+	Polynom P(degree, coefficients);
+
+	//отнимаем из многочлена самого себя
+	Polynom result = P - P;
+
+	cout << "operator - test:" << endl;
+	cout << "Expected \t Actually" << endl;
+	cout << "Degree:" << endl;
+	cout << degree << " \t\t " << result.getDegree() << endl;
+	cout << "Coefficients:" << endl;
+	for (int i = 0; i < result.getDegree() + 1; i++)
+		cout << 0 << " \t\t " << result.getCoefficient(i) << endl;
+
+	//степень суммы должна равняться degree
+	if (result.getDegree() != degree)
+		throw exception("Bad degree in operator -");
+
+	//коэффициенты должны совпадать с ожидаемыми
+	for (int i = 0; i < degree + 1; i++)
+		if (result.getCoefficient(i) != 0)
+			throw exception("Bad coefficient in operator -");
+
+	cout << "The operator - was tested successfully!" << endl;
+}
+
+//тест оператора ++ (префикс)
+void prefixIncrementOperatorTest()
+{
+	Polynom p;
+	++p;
+
+	cout << "operator ++(prefix) test:" << endl;
+	cout << "Expected \t Actually" << endl;
+	cout << "Degree:" << endl;
+	cout << 1 << "\t\t" << p.getDegree() << endl;
+
+	if (p.getDegree() != 1)
+		throw exception("Bad degree in operator ++ (prefix)");
+
+	cout << "The operator ++(prefix) was tested successfully!" << endl;
+}
+
+//тест оператора ++ (постфикс)
+void postfixIncrementOperatorTest()
+{
+	Polynom p;
+	p++;
+
+	cout << "operator ++(postfix) test:" << endl;
+	cout << "Expected \t Actually" << endl;
+	cout << "Degree:" << endl;
+	cout << 1 << "\t\t" << p.getDegree() << endl;
+
+	if (p.getDegree() != 1)
+		throw exception("Bad degree in operator ++ (postfix)");
+
+	cout << "The operator ++(postfix) was tested successfully!" << endl;
+}
+
+//тест оператора -- (префикс)
+void prefixDecrementOperatorTest()
+{
+	double coefficients[2] = { 0,1 };
+	Polynom p(1, coefficients);
+	--p;
+
+	cout << "operator --(prefix) test:" << endl;
+	cout << "Expected \t Actually" << endl;
+	cout << "Degree:" << endl;
+	cout << 0 << "\t\t" << p.getDegree() << endl;
+
+	if (p.getDegree() != 0)
+		throw exception("Bad degree in operator -- (prefix)");
+
+	cout << "The operator --(prefix) was tested successfully!" << endl;
+}
+
+//тест оператора -- (постфикс)
+void postfixDecrementOperatorTest()
+{
+	double coefficients[2] = { 0,1 };
+	Polynom p(1, coefficients);
+	p--;
+
+	cout << "operator --(postfix) test:" << endl;
+	cout << "Expected \t Actually" << endl;
+	cout << "Degree:" << endl;
+	cout << 0 << "\t\t" << p.getDegree() << endl;
+
+	if (p.getDegree() != 0)
+		throw exception("Bad degree in operator -- (postfix)");
+
+	cout << "The operator --(postfix) was tested successfully!" << endl;
+}
+
+//тест оператора ()
+void functionOperatorTest()
+{
+	double x = 2;
+	int degree = 5;
+	double* coefficients = new double[degree + 1];
+	for (int i = 0; i < degree + 1; i++)
+		coefficients[i] = 1;
+
+	Polynom P(degree, coefficients);
+
+	cout << "operator () test for x = 2:" << endl;
+	cout << "Excpected \t Actually" << endl;
+	cout << 63 << " \t\t " << P(x) << endl;
+
+
+	if (P(x) != 63)
+		throw exception("Bad value in operator ()");
+
+	cout << "The operator () was tested successfully!" << endl;
+}
+
+//тест оператора []
+void indexOperatorTest()
+{
+	int degree = 5;
+	double* coefficients = new double[degree + 1];
+	for (int i = 0; i < degree + 1; i++)
+		coefficients[i] = i;
+
+	Polynom P(degree, coefficients);
+
+	cout << "operator [] test:" << endl;
+	cout << "Expected \t Actually" << endl;
+	cout << "Coefficients:" << endl;
+	for (int i = 0; i < degree + 1; i++)
+	{
+
+		cout << i << " \t\t " << P[i] << endl;
+
+		//все установленные значения должны совпадать с входными значениями
+		if (P[i] != i)
+			throw exception("Bad value in operator []");
+	}
+	delete[] coefficients;
+
+	cout << "The operator []  was tested successfully!" << endl;
+}
+
+//тест оператора =
+void assignmentOperatorTest()
+{
+	int degree = 5;
+	double* coefficients = new double[degree + 1];
+	for (int i = 0; i < degree + 1; i++)
+		coefficients[i] = i;
+
+	//конструктор с параметрами должен создавать многочлен со степенью degree и коэффициентами coefficients
+
+	Polynom P(degree, coefficients), P2 = P;
+
+	cout << "Operator = test:" << endl;
+	cout << "Expected \t Actually" << endl;
+	cout << "Degree:" << endl;
+	cout << P.getDegree() << " \t\t " << P2.getDegree() << endl;
+	cout << "Coefficients:" << endl;
+	for (int i = 0; i < P.getDegree() + 1; i++)
+		cout << P.getCoefficient(i) << " \t\t " << P2.getCoefficient(i) << endl;
+
+	//степени многочленов должны совпадать
+	if (P2.getDegree() != P.getDegree())
+		throw exception("Bad degree in Operator =");
+
+	//коэффициенты должны совпадать
+	for (int i = 0; i < P.getDegree() + 1; i++)
+		if (P2.getCoefficient(i) != P.getCoefficient(i))
+			throw exception("Bad coefficients in Operator =");
+
+	cout << "The Operator = was tested successfully!" << endl;
 }

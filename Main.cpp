@@ -1,16 +1,15 @@
 
-#include <iostream>
 #include "Polynom/PolynomTests/PolynomTests.h"
-
-using namespace std;
-
 
 
 int main()
 {
+	/*Лабораторная работа 1*/
+
 	try
 	{
 		defaultConstructorTest();
+		cout << endl;
 	}
 	catch (const std::exception& error)
 	{
@@ -20,6 +19,7 @@ int main()
 	try
 	{
 		parametrConstructorTest();
+		cout << endl;
 	}
 	catch (const std::exception& error)
 	{
@@ -29,6 +29,7 @@ int main()
 	try
 	{
 		copyConstructorTest();
+		cout << endl;
 	}
 	catch (const std::exception& error)
 	{
@@ -38,6 +39,7 @@ int main()
 	try
 	{
 		setDegreeTest();
+		cout << endl;
 	}
 	catch (const std::exception& error)
 	{
@@ -47,6 +49,7 @@ int main()
 	try
 	{
 		setCoefficientsTest();
+		cout << endl;
 	}
 	catch (const std::exception& error)
 	{
@@ -56,6 +59,7 @@ int main()
 	try
 	{
 		setCoefficientTest();
+		cout << endl;
 	}
 	catch (const std::exception& error)
 	{
@@ -65,15 +69,107 @@ int main()
 	try
 	{
 		computeTest();
+		cout << endl;
 	}
 	catch (const std::exception& error)
 	{
 		cout << error.what() << endl;
 	}
 
-	cout << endl;
-	char c;
+	/*Лабораторная работа 2*/
+
+	try
+	{
+		assignmentOperatorTest();
+		cout << endl;
+	}
+	catch (const std::exception& error)
+	{
+		cout << error.what() << endl;
+	}
+
+	try
+	{
+		addOperatorTest();
+		cout << endl;
+	}
+	catch (const std::exception& error)
+	{
+		cout << error.what() << endl;
+	}
+
+	try
+	{
+		subOperatorTest();
+		cout << endl;
+	}
+	catch (const std::exception& error)
+	{
+		cout << error.what() << endl;
+	}
+
+	try
+	{
+		prefixIncrementOperatorTest();
+		cout << endl;
+	}
+	catch (const std::exception& error)
+	{
+		cout << error.what() << endl;
+	}
+
+	try
+	{
+		postfixIncrementOperatorTest();
+		cout << endl;
+	}
+	catch (const std::exception& error)
+	{
+		cout << error.what() << endl;
+	}
+
+	try
+	{
+		prefixDecrementOperatorTest();
+		cout << endl;
+	}
+	catch (const std::exception& error)
+	{
+		cout << error.what() << endl;
+	}
+
+	try
+	{
+		postfixDecrementOperatorTest();
+		cout << endl;
+	}
+	catch (const std::exception& error)
+	{
+		cout << error.what() << endl;
+	}
+
+	try
+	{
+		functionOperatorTest();
+		cout << endl;
+	}
+	catch (const std::exception& error)
+	{
+		cout << error.what() << endl;
+	}
+
+	try
+	{
+		indexOperatorTest();
+		cout << endl;
+	}
+	catch (const std::exception& error)
+	{
+		cout << error.what() << endl;
+	}
+
 	cout << "Click any button:" << endl;
+	char c;
 	cin >> c;
 
 	return 0;
